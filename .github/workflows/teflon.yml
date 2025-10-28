@@ -1,0 +1,27 @@
+name: Mesa Teflon Delegate
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  libteflon:
+
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag binaries:latest
+    - name: Extract artifacts
+      run: |
+        docker create --name binaries binaries:latest
+        docker cp binaries:/tmp/libteflon.so /tmp/
+        docker rm binaries
+    - uses: actions/upload-artifact@v4
+      with:
+        name: libteflon.so
+        path: /tmp/libteflon.so
