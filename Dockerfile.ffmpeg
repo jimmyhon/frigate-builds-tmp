@@ -16,5 +16,5 @@ RUN apt update \
 RUN cd /tmp \
 && git clone --depth 1 https://code.ffmpeg.org/Kwiboo/FFmpeg.git -b v4l2-request-n8.0.1 ffmpeg \
 && cd ffmpeg \
-&& ./configure --enable-version3 --disable-debug \
+&& ./configure --enable-version3 --disable-debug --disable-libxcb --disable-xlib --disable-alsa --disable-sndio --disable-vdpau \
 && make -j4
